@@ -62,7 +62,7 @@ public class ExtendedTableWithMeanMedianMode extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         jTitle.setFont(new java.awt.Font("Calibri", 1, 24)); // NOI18N
-        jTitle.setText("Frequency Distribtion Table for Grouped Data");
+        jTitle.setText("Frequency Distribtion Table");
         jTitle.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         jTitle.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
@@ -116,10 +116,6 @@ public class ExtendedTableWithMeanMedianMode extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane1)
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(317, Short.MAX_VALUE)
-                .addComponent(jTitle)
-                .addGap(261, 261, 261))
             .addGroup(layout.createSequentialGroup()
                 .addGap(204, 204, 204)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -133,7 +129,11 @@ public class ExtendedTableWithMeanMedianMode extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jModeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jMeanButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(226, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jTitle)
+                .addGap(365, 365, 365))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -391,7 +391,8 @@ public class ExtendedTableWithMeanMedianMode extends javax.swing.JFrame {
 		return (mean.divide(new BigDecimal(data.length), 4, RoundingMode.CEILING));
 	}
         
-        void readFile() throws Exception {
+ 
+        boolean readFile() throws Exception {
 
 		String x;
                  
@@ -428,14 +429,13 @@ public class ExtendedTableWithMeanMedianMode extends javax.swing.JFrame {
 
 			else {
 				System.out.println("Please enter data in valid format.");
-				System.exit(0);
+				return false;
 			}
 		}
 
 		if (y[0].length != y[1].length || y[0].length != y[2].length) {
-			System.out.println("No. of Upper and limts should be same.");
-			System.exit(0);
-		}
+			System.out.println("No. of Upper & Lower limts & Frequencies should be same.");
+			return false;		}
                 limits = new Double[2][y[0].length];
                 
                 for(int i = 0; i < y[0].length; i++){
@@ -457,6 +457,8 @@ public class ExtendedTableWithMeanMedianMode extends javax.swing.JFrame {
 		y = null;
 
 		rd.close();
+                
+                return true;
 	}
         
         void computeBondaries() {
@@ -519,29 +521,32 @@ public class ExtendedTableWithMeanMedianMode extends javax.swing.JFrame {
 		initComponents();
                 setResizable(false);
                
-                readFile();
-                tallyMarks = new String[frequency.length];
-                NumberOfClasses = frequency.length;
-                computeBondaries();
-                makeTallyMarks();
-                computeMidPoint();
-		computeCommulativeFrequency();
-
-		String dat[][] = new String[NumberOfClasses + 1][6];
-
-		for (int i = 0; i < NumberOfClasses; i++) {
-
-			dat[i][0] = limits[0][i] + "-" + limits[1][i];
-			dat[i][1] = "" + frequency[i];
-			dat[i][2] = lowerBoundary[i] + "-" + upperBoundary[i];
-                        dat[i][3] = "" + midPoint[i];
-                        dat[i][4] = "" + commulativeFrequency[i];
-                        dat[i][5] = "" + tallyMarks[i];
-                }
-               // dat[x.length - 1][dat.length] = x[x.length - 1];
+                if(readFile()){
                 
-		String column[] = { "Class Intevals", "Frequency","Class Boundaries","Class Mid Points", "Cummulative Frequency","Tally Marks" };
-                jTable1.setModel(new javax.swing.table.DefaultTableModel(dat,column));
+                    tallyMarks = new String[frequency.length];
+                    NumberOfClasses = frequency.length;
+                    computeBondaries();
+                    makeTallyMarks();
+                    computeMidPoint();
+                    computeCommulativeFrequency();
+
+                    String dat[][] = new String[NumberOfClasses + 1][6];
+
+                    for (int i = 0; i < NumberOfClasses; i++) {
+
+                            dat[i][0] = limits[0][i] + "-" + limits[1][i];
+                            dat[i][1] = "" + frequency[i];
+                            dat[i][2] = lowerBoundary[i] + "-" + upperBoundary[i];
+                            dat[i][3] = "" + midPoint[i];
+                            dat[i][4] = "" + commulativeFrequency[i];
+                            dat[i][5] = "" + tallyMarks[i];
+                    }
+                   // dat[x.length - 1][dat.length] = x[x.length - 1];
+
+                    String column[] = { "Class Intevals", "Frequency","Class Boundaries","Class Mid Points", "Cummulative Frequency","Tally Marks" };
+                    jTable1.setModel(new javax.swing.table.DefaultTableModel(dat,column));
+                }
+                
         }
 
 	
