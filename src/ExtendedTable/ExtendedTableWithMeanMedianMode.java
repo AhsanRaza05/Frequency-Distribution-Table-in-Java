@@ -21,7 +21,6 @@ import javax.swing.JTable;
  */
 public class ExtendedTableWithMeanMedianMode extends javax.swing.JFrame {
 
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -160,9 +159,9 @@ public class ExtendedTableWithMeanMedianMode extends javax.swing.JFrame {
 
     private void jMedianButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMedianButtonActionPerformed
         // TODO add your handling code here:
-      new Median(limits,frequency,commulativeFrequency).setVisible(true);
-        
-       /* BigDecimal median[];
+        new Median(limits, frequency, commulativeFrequency).setVisible(true);
+
+        /* BigDecimal median[];
        
         median = m.computeMedian();
         
@@ -170,44 +169,44 @@ public class ExtendedTableWithMeanMedianMode extends javax.swing.JFrame {
         
 		System.out.println("\nWhen l = " + lowerBoundary[median[2].intValue()] + " Median is " + median[0]);
 		System.out.println("\nWhen l = " + limits[0][median[2].intValue()] + " Median is " + median[1]);
-        */
+         */
     }//GEN-LAST:event_jMedianButtonActionPerformed
 
     private void jModeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jModeButtonActionPerformed
         // TODO add your handling code here:
-        
-        new Mode(limits,frequency).setVisible(true);
+
+        new Mode(limits, frequency).setVisible(true);
     }//GEN-LAST:event_jModeButtonActionPerformed
 
     private void jMeanButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMeanButton1ActionPerformed
         // TODO add your handling code here:
-        
-        Mean m = new Mean(limits,frequency,midPoint);
+
+        Mean m = new Mean(limits, frequency, midPoint);
         m.setVisible(true);
     }//GEN-LAST:event_jMeanButton1ActionPerformed
 
     private void jMeanButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMeanButton2ActionPerformed
         // TODO add your handling code here:
-       new StandardDeviation(limits, frequency, midPoint).setVisible(true);
+        new StandardDeviation(limits, frequency, midPoint).setVisible(true);
     }//GEN-LAST:event_jMeanButton2ActionPerformed
 
     private void jMeanButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMeanButton3ActionPerformed
         // TODO add your handling code here:
-        
+
         new MeanDeviation(limits, frequency, midPoint).setVisible(true);
         System.out.println("HI");
     }//GEN-LAST:event_jMeanButton3ActionPerformed
 
     private void jMeanButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMeanButton4ActionPerformed
         // TODO add your handling code here:
-        
+
         new Quantile(limits, frequency, commulativeFrequency).setVisible(true);
     }//GEN-LAST:event_jMeanButton4ActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) throws Exception{
+    public static void main(String args[]) throws Exception {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -238,353 +237,404 @@ public class ExtendedTableWithMeanMedianMode extends javax.swing.JFrame {
                 //new ExtendedTable().setVisible(true);
             }
         });
-        
-          // ********************************* MYCODE ***************************
-        
-  
-                ExtendedTableWithMeanMedianMode a = new ExtendedTableWithMeanMedianMode();
-                a.setVisible(true);
-                
-                
-        
+
+        // ********************************* MYCODE ***************************
+//        ExtendedTableWithMeanMedianMode a = new ExtendedTableWithMeanMedianMode();
+//        a.setVisible(true);
+
         // ********************************* MYCODE ***************************
     }
 // ******************************** MY CODE *********************************
-    
-        BigDecimal data[];
-        
-        Double limits[][];
 
-	Double lowerBoundary[];
-	Double upperBoundary[];
+    BigDecimal data[];
 
-	Double midPoint[];
-	Integer frequency[];
-        Integer commulativeFrequency[];
-	Integer NumberOfClasses;
-        Integer totalFrequency;
+    Double limits[][];
 
+    Double lowerBoundary[];
+    Double upperBoundary[];
 
-	String tallyMarks[] ;
+    Double midPoint[];
+    Integer frequency[];
+    Integer commulativeFrequency[];
+    Integer NumberOfClasses;
+    Integer totalFrequency;
 
-	Integer sizeOfClassInteval;
-	BigDecimal average1, average2;
-        
-        //
-        
-        BigDecimal computeMeanDeviation() {
+    String tallyMarks[];
 
-		BigDecimal MeanDeviation = new BigDecimal("0.0");
-		BigDecimal tempMeanDeviation;
-		BigDecimal mean = computeMean();
+    Integer sizeOfClassInteval;
+    BigDecimal average1, average2;
 
-		System.out.println("\n MMMean is " + mean);
+    //
+    BigDecimal computeMeanDeviation() {
 
-		for (int i = 0; i < midPoint.length; i++) {
-			// MeanDeviation = MeanDeviation.add(new
-			// BigDecimal(midPointsOfClass[i].toString()).subtract(mean).abs()
-			// .multiply((new BigDecimal(Frequency[i]))));
+        BigDecimal MeanDeviation = new BigDecimal("0.0");
+        BigDecimal tempMeanDeviation;
+        BigDecimal mean = computeMean();
 
-			tempMeanDeviation = new BigDecimal(midPoint[i].toString()).subtract(mean);
-			tempMeanDeviation = tempMeanDeviation.abs().multiply((new BigDecimal(frequency[i])));
-			MeanDeviation = MeanDeviation.add(tempMeanDeviation);
-		}
-		MeanDeviation = MeanDeviation.divide(
-				new BigDecimal(commulativeFrequency[commulativeFrequency.length - 1].toString()), 4,
-				RoundingMode.CEILING);
+        System.out.println("\n MMMean is " + mean);
 
-		return (MeanDeviation);
-	}
-        
-        BigDecimal computeMode() {
+        for (int i = 0; i < midPoint.length; i++) {
+            // MeanDeviation = MeanDeviation.add(new
+            // BigDecimal(midPointsOfClass[i].toString()).subtract(mean).abs()
+            // .multiply((new BigDecimal(Frequency[i]))));
 
-		Integer modalClassIndex = 0;
-		Integer maxFrequency = frequency[0];
-		Integer delta1, delta2;
-		Double lowerclassBoundaryOfModalClass, sizeOfModalClass;
-		BigDecimal mode;
+            tempMeanDeviation = new BigDecimal(midPoint[i].toString()).subtract(mean);
+            tempMeanDeviation = tempMeanDeviation.abs().multiply((new BigDecimal(frequency[i])));
+            MeanDeviation = MeanDeviation.add(tempMeanDeviation);
+        }
+        MeanDeviation = MeanDeviation.divide(
+                new BigDecimal(commulativeFrequency[commulativeFrequency.length - 1].toString()), 4,
+                RoundingMode.CEILING);
 
-		for (int i = 1; i < frequency.length; i++)
+        return (MeanDeviation);
+    }
 
-			if (maxFrequency < frequency[i]) {
-				maxFrequency = frequency[i];
-				modalClassIndex = i;
-			}
+    BigDecimal computeMode() {
 
-		maxFrequency = null;
+        Integer modalClassIndex = 0;
+        Integer maxFrequency = frequency[0];
+        Integer delta1, delta2;
+        Double lowerclassBoundaryOfModalClass, sizeOfModalClass;
+        BigDecimal mode;
 
-		lowerclassBoundaryOfModalClass = lowerBoundary[modalClassIndex];
-		sizeOfModalClass = upperBoundary[modalClassIndex] - lowerBoundary[modalClassIndex];
+        for (int i = 1; i < frequency.length; i++) {
+            if (maxFrequency < frequency[i]) {
+                maxFrequency = frequency[i];
+                modalClassIndex = i;
+            }
+        }
 
-		if (modalClassIndex == 0)
-			delta1 = frequency[modalClassIndex];
-		else
-			delta1 = frequency[modalClassIndex] - frequency[modalClassIndex - 1];
+        maxFrequency = null;
 
-		if (modalClassIndex == frequency.length - 1)
-			delta2 = frequency[modalClassIndex];
-		else
-			delta2 = frequency[modalClassIndex] - frequency[modalClassIndex + 1];
+        lowerclassBoundaryOfModalClass = lowerBoundary[modalClassIndex];
+        sizeOfModalClass = upperBoundary[modalClassIndex] - lowerBoundary[modalClassIndex];
 
-		mode = new BigDecimal(delta1 + delta2);
-		mode = new BigDecimal(delta1).divide(mode, 4, RoundingMode.CEILING);
-		mode = mode.multiply(new BigDecimal(sizeOfModalClass));
-		mode = mode.add(new BigDecimal(lowerclassBoundaryOfModalClass));
-		return (mode);
-	}
+        if (modalClassIndex == 0) {
+            delta1 = frequency[modalClassIndex];
+        } else {
+            delta1 = frequency[modalClassIndex] - frequency[modalClassIndex - 1];
+        }
 
-        BigDecimal[] computeMedian() {
+        if (modalClassIndex == frequency.length - 1) {
+            delta2 = frequency[modalClassIndex];
+        } else {
+            delta2 = frequency[modalClassIndex] - frequency[modalClassIndex + 1];
+        }
 
-		int medianClassindex = -1;
-		Double sizeOfMedianClass;
-		BigDecimal median[] = new BigDecimal[3];
+        mode = new BigDecimal(delta1 + delta2);
+        mode = new BigDecimal(delta1).divide(mode, 4, RoundingMode.CEILING);
+        mode = mode.multiply(new BigDecimal(sizeOfModalClass));
+        mode = mode.add(new BigDecimal(lowerclassBoundaryOfModalClass));
+        return (mode);
+    }
 
-		Double halfOfN = commulativeFrequency[commulativeFrequency.length - 1] / 2.0;
+    BigDecimal[] computeMedian() {
 
-		for (int i = 0; i < commulativeFrequency.length; i++)
+        int medianClassindex = -1;
+        Double sizeOfMedianClass;
+        BigDecimal median[] = new BigDecimal[3];
 
-			if (commulativeFrequency[i] >= halfOfN) {
+        Double halfOfN = commulativeFrequency[commulativeFrequency.length - 1] / 2.0;
 
-				medianClassindex = i;
-				break;
-			}
+        for (int i = 0; i < commulativeFrequency.length; i++) {
+            if (commulativeFrequency[i] >= halfOfN) {
 
-		if (medianClassindex == -1) {
+                medianClassindex = i;
+                break;
+            }
+        }
 
-			System.out.println("\nCan not find Median Class. Please check your entered data.");
-			System.exit(0);
-		}
+        if (medianClassindex == -1) {
 
-		sizeOfMedianClass = upperBoundary[medianClassindex] - lowerBoundary[medianClassindex];
+            System.out.println("\nCan not find Median Class. Please check your entered data.");
+            System.exit(0);
+        }
 
-		median[2] = new BigDecimal(medianClassindex);
-		median[0] = new BigDecimal(halfOfN.toString())
-				.subtract(new BigDecimal(commulativeFrequency[medianClassindex - 1]));
-		median[0] = median[0].multiply(new BigDecimal(sizeOfMedianClass.toString()));
+        sizeOfMedianClass = upperBoundary[medianClassindex] - lowerBoundary[medianClassindex];
 
-		median[0] = median[0].divide(new BigDecimal(frequency[medianClassindex]), 4, RoundingMode.CEILING);
+        median[2] = new BigDecimal(medianClassindex);
+        median[0] = new BigDecimal(halfOfN.toString())
+                .subtract(new BigDecimal(commulativeFrequency[medianClassindex - 1]));
+        median[0] = median[0].multiply(new BigDecimal(sizeOfMedianClass.toString()));
 
-		median[1] = median[0];
+        median[0] = median[0].divide(new BigDecimal(frequency[medianClassindex]), 4, RoundingMode.CEILING);
 
-		median[0] = median[0].add(new BigDecimal(lowerBoundary[medianClassindex]));
+        median[1] = median[0];
 
-		median[1] = median[1].add(new BigDecimal(limits[0][medianClassindex]));
+        median[0] = median[0].add(new BigDecimal(lowerBoundary[medianClassindex]));
 
-		/*System.out.println("\nTotal Obsevations " + commulativeFrequency[commulativeFrequency.length - 1]);
+        median[1] = median[1].add(new BigDecimal(limits[0][medianClassindex]));
+
+        /*System.out.println("\nTotal Obsevations " + commulativeFrequency[commulativeFrequency.length - 1]);
 		System.out.println("Lower Limit of median class l = " + lowerBoundary[medianClassindex]);
 		System.out.println("CF before median class CF = " + commulativeFrequency[medianClassindex - 1]);
 		System.out.println("F of median class F = " + frequency[medianClassindex]);
 		System.out.println("Class Size S =" + sizeOfMedianClass);
 		System.out.println("N/2 " + halfOfN);*/
-		return (median);
-	}
+        return (median);
+    }
+
+    BigDecimal computeMean() {
+
+        BigDecimal mean = new BigDecimal("0");
+
+        System.out.println();
+        for (int i = 0; i < frequency.length; i++) {
+            mean = mean.add(new BigDecimal(frequency[i] + "").multiply(new BigDecimal(midPoint[i] + "")));
+        }
+        // System.out.println(mean);
+
+        return (mean.divide(new BigDecimal(data.length), 4, RoundingMode.CEILING));
+    }
+
+    boolean getInput(String allText){
         
-        BigDecimal computeMean() {
+        String []x = allText.split("\n");
 
-		BigDecimal mean = new BigDecimal("0");
-
-		System.out.println();
-		for (int i = 0; i < frequency.length; i++)
-			mean = mean.add(new BigDecimal(frequency[i]+"").multiply(new BigDecimal(midPoint[i]+"")));
-		// System.out.println(mean);
-
-		return (mean.divide(new BigDecimal(data.length), 4, RoundingMode.CEILING));
-	}
+        System.out.println(InputData.inputJTextArea.getText());
         
- 
-        boolean readFile() throws Exception {
+        String y[][] = new String[3][];
+        
+        if(x.length != 3){
+         
+            return false;
+        }
+        
+        for (int i = 0; i < x.length; i++) {
+            
+            // System.out.println(x);
 
-		String x;
-                 
-		String y[][] = new String[3][];
-		File f = new File(
-				System.getProperty("user.dir") + "/Input0.txt");
-		
-// "C:/Users/Ahsan/Desktop/Java/Programs in
-		// Eclipse/SP/MeanMedianModebyGroupdata/Median/Input14.txt");
-		// f.createNewFile();
-
-		// "C:\\Users\\Ahsan\\Desktop\\JAVA\\Java\\Programs in
-		// Eclipse\\SP\\MeanMedianModebyGroupdata\\Median\Input14.txt"
-
-		BufferedReader rd = new BufferedReader(new FileReader(f));
-
-		/*
-		 * uLlLf[0] = rd.readLine(); uLlLf[1] = rd.readLine(); uLlLf[2] = rd.readLine();
-		 */
-
-		for (int i = 0; i < 3; i++) {
-
-			x = rd.readLine();
-			// System.out.println(x);
-
-			if (x.contains(","))
-				if (x.contains(", "))
-					y[i] = x.split(", ");
-				else
-					y[i] = x.split(",");
-
-			else if (x.contains(" "))
-				y[i] = x.split(" ");
-
-			else {
-				System.out.println("Please enter data in valid format.");
-				return false;
-			}
-		}
-
-		if (y[0].length != y[1].length || y[0].length != y[2].length) {
-			System.out.println("No. of Upper & Lower limts & Frequencies should be same.");
-			return false;		}
-                limits = new Double[2][y[0].length];
-                
-                for(int i = 0; i < y[0].length; i++){
-                    
-                    limits[0][i] = Double.parseDouble(y[0][i]);
-                    limits[1][i] = Double.parseDouble(y[1][i]);
+            if (x[i].contains(",")) {
+                if (x[i].contains(", ")) {
+                    y[i] = x[i].split(", ");
+                } else {
+                    y[i] = x[i].split(",");
                 }
-		
-		//System.out.println("Limits");
-		
-                for (int i = 0; i < limits[0].length; i++)
-			//System.out.println(limits[0][i] + "-" + limits[1][i]);
-		
-                frequency = new Integer[y[2].length];
+            } else if (x[i].contains(" ")) {
+                y[i] = x[i].split(" ");
+            } else {
+                System.out.println("Please enter data in valid format.");
+                return false;
+            }
+        }
 
-		for (Integer i = 0; i < y[2].length; i++)
-			frequency[i] = Integer.parseInt(y[2][i]);
+        if (y[0].length != y[1].length || y[0].length != y[2].length) {
+            System.out.println("No. of Upper & Lower limts & Frequencies should be same.");
+            return false;
+        }
+        limits = new Double[2][y[0].length];
 
-		y = null;
+        for (int i = 0; i < y[0].length; i++) {
 
-		rd.close();
-                
-                return true;
-	}
-        
-        void computeBondaries() {
-		lowerBoundary = new Double[limits[0].length];
-		upperBoundary = new Double[limits[1].length];
+            limits[0][i] = Double.parseDouble(y[0][i]);
+            limits[1][i] = Double.parseDouble(y[1][i]);
+        }
 
-		//System.out.println();
-		//System.out.print("Lower Boundaries and Upper Boundaries\n");
-		for (int i = 0; i < limits[0].length; i++)
-			lowerBoundary[i] = limits[0][i] - 0.5;
+        //System.out.println("Limits");
+        for (int i = 0; i < limits[0].length; i++) //System.out.println(limits[0][i] + "-" + limits[1][i]);
+        {
+            frequency = new Integer[y[2].length];
+        }
 
-		for (int i = 0; i < limits[0].length; i++) {
+        for (Integer i = 0; i < y[2].length; i++) {
+            frequency[i] = Integer.parseInt(y[2][i]);
+        }
 
-			/*if ((i + 1) < limits[0].length && Integer.parseInt(limits[1][i]) == Integer.parseInt(limits[0][i + 1]))
+        y = null;
+
+        return true;
+    }
+    
+    boolean readFile() throws Exception {
+
+        String x;
+
+        String y[][] = new String[3][];
+        File f = new File(
+                System.getProperty("user.dir") + "/Input0.txt");
+
+// "C:/Users/Ahsan/Desktop/Java/Programs in
+        // Eclipse/SP/MeanMedianModebyGroupdata/Median/Input14.txt");
+        // f.createNewFile();
+        // "C:\\Users\\Ahsan\\Desktop\\JAVA\\Java\\Programs in
+        // Eclipse\\SP\\MeanMedianModebyGroupdata\\Median\Input14.txt"
+        BufferedReader rd = new BufferedReader(new FileReader(f));
+
+        /*
+		 * uLlLf[0] = rd.readLine(); uLlLf[1] = rd.readLine(); uLlLf[2] = rd.readLine();
+         */
+        for (int i = 0; i < 3; i++) {
+
+            x = rd.readLine();
+            // System.out.println(x);
+
+            if (x.contains(",")) {
+                if (x.contains(", ")) {
+                    y[i] = x.split(", ");
+                } else {
+                    y[i] = x.split(",");
+                }
+            } else if (x.contains(" ")) {
+                y[i] = x.split(" ");
+            } else {
+                System.out.println("Please enter data in valid format.");
+                return false;
+            }
+        }
+
+        if (y[0].length != y[1].length || y[0].length != y[2].length) {
+            System.out.println("No. of Upper & Lower limts & Frequencies should be same.");
+            return false;
+        }
+        limits = new Double[2][y[0].length];
+
+        for (int i = 0; i < y[0].length; i++) {
+
+            limits[0][i] = Double.parseDouble(y[0][i]);
+            limits[1][i] = Double.parseDouble(y[1][i]);
+        }
+
+        //System.out.println("Limits");
+        for (int i = 0; i < limits[0].length; i++) //System.out.println(limits[0][i] + "-" + limits[1][i]);
+        {
+            frequency = new Integer[y[2].length];
+        }
+
+        for (Integer i = 0; i < y[2].length; i++) {
+            frequency[i] = Integer.parseInt(y[2][i]);
+        }
+
+        y = null;
+
+        rd.close();
+
+        return true;
+    }
+
+    void computeBondaries() {
+        lowerBoundary = new Double[limits[0].length];
+        upperBoundary = new Double[limits[1].length];
+
+        //System.out.println();
+        //System.out.print("Lower Boundaries and Upper Boundaries\n");
+        for (int i = 0; i < limits[0].length; i++) {
+            lowerBoundary[i] = limits[0][i] - 0.5;
+        }
+
+        for (int i = 0; i < limits[0].length; i++) {
+
+            /*if ((i + 1) < limits[0].length && Integer.parseInt(limits[1][i]) == Integer.parseInt(limits[0][i + 1]))
 				upperBoundary[i] = Integer.parseInt(limits[1][i]) - 1 + 0.5;
 
 			else
 				upperBoundary[i] = Integer.parseInt(limits[1][i]) + 0.5;*/
-                        
-                        upperBoundary[i] = limits[1][i] + 0.5;
+            upperBoundary[i] = limits[1][i] + 0.5;
 
-			//System.out.print(lowerBoundary[i] + "-");
-			//System.out.println(upperBoundary[i]);
-		}
-
-		//System.out.println();
-	}
-        
-        void computeCommulativeFrequency() {
-
-		totalFrequency = 0;
-		commulativeFrequency = new Integer[limits[0].length];
-
-		//System.out.print("\nCommulative Frequencies ");
-
-		commulativeFrequency[0] = frequency[0];
-		//System.out.print(commulativeFrequency[0] + " ");
-
-		for (int i = 1; i < limits[0].length; i++) {
-			commulativeFrequency[i] = frequency[i] + commulativeFrequency[i - 1];
-		//	System.out.print(commulativeFrequency[i] + " ");
-		}
-		totalFrequency = commulativeFrequency[frequency.length - 1];
-	}
-        
-        void computeMidPoint() {
-            
-		midPoint = new Double[limits[0].length];
-		
-                //System.out.print("Mid Points ");
-		
-                for (int i = 0; i < limits[0].length; i++) {
-			midPoint[i] = (limits[0][i] + limits[1][i]) / 2.0;
-			//System.out.print(midPoint[i] + " ");
-		}
-	}
-        
-        public ExtendedTableWithMeanMedianMode() throws Exception {
-		
-		initComponents();
-                setResizable(false);
-               
-                if(readFile()){
-                
-                    tallyMarks = new String[frequency.length];
-                    NumberOfClasses = frequency.length;
-                    computeBondaries();
-                    makeTallyMarks();
-                    computeMidPoint();
-                    computeCommulativeFrequency();
-
-                    String dat[][] = new String[NumberOfClasses + 1][6];
-
-                    for (int i = 0; i < NumberOfClasses; i++) {
-
-                            dat[i][0] = limits[0][i] + "-" + limits[1][i];
-                            dat[i][1] = "" + frequency[i];
-                            dat[i][2] = lowerBoundary[i] + "-" + upperBoundary[i];
-                            dat[i][3] = "" + midPoint[i];
-                            dat[i][4] = "" + commulativeFrequency[i];
-                            dat[i][5] = "" + tallyMarks[i];
-                    }
-                   // dat[x.length - 1][dat.length] = x[x.length - 1];
-
-                    String column[] = { "Class Intevals", "Frequency","Class Boundaries","Class Mid Points", "Cummulative Frequency","Tally Marks" };
-                    jTable1.setModel(new javax.swing.table.DefaultTableModel(dat,column));
-                }
-                
+            //System.out.print(lowerBoundary[i] + "-");
+            //System.out.println(upperBoundary[i]);
         }
 
-	
-        void makeTallyMarks() {
+        //System.out.println();
+    }
 
-		int y = 0;
-		//String x[];
-		//frequency = new Integer[tallyMarks.length];
-		//x = new String[tallyMarks.length + 1];
-		Integer total = 0;
+    void computeCommulativeFrequency() {
 
-		for (int i = 0; i < tallyMarks.length; i++) {
+        totalFrequency = 0;
+        commulativeFrequency = new Integer[limits[0].length];
 
-			tallyMarks[i] = "";
-			y = 0;
+        //System.out.print("\nCommulative Frequencies ");
+        commulativeFrequency[0] = frequency[0];
+        //System.out.print(commulativeFrequency[0] + " ");
 
-			int o = 0;
-	
-			for (int j = 0; j < frequency[i]; j++){
+        for (int i = 1; i < limits[0].length; i++) {
+            commulativeFrequency[i] = frequency[i] + commulativeFrequency[i - 1];
+            //	System.out.print(commulativeFrequency[i] + " ");
+        }
+        totalFrequency = commulativeFrequency[frequency.length - 1];
+    }
 
-			
+    void computeMidPoint() {
 
-					if (tallyMarks[i].substring(y).length() == 4) {
+        midPoint = new Double[limits[0].length];
 
-						tallyMarks[i] += "/ ";
-						y += 2 + 4;
-					} else
-						tallyMarks[i] += "|";
-                                        
-					o++;
-                                
-                        }
+        //System.out.print("Mid Points ");
+        for (int i = 0; i < limits[0].length; i++) {
+            midPoint[i] = (limits[0][i] + limits[1][i]) / 2.0;
+            //System.out.print(midPoint[i] + " ");
+        }
+    }
 
-			total += o;
-		}
+    public ExtendedTableWithMeanMedianMode(String x) throws Exception {
 
+        initComponents();
+        setResizable(false);
 
-	}
+        System.out.println("Inside Extended Table");
+        
+        new InputData();
+        
+        if (getInput(x)) {
+
+            tallyMarks = new String[frequency.length];
+            NumberOfClasses = frequency.length;
+            computeBondaries();
+            makeTallyMarks();
+            computeMidPoint();
+            computeCommulativeFrequency();
+
+            String dat[][] = new String[NumberOfClasses + 1][6];
+
+            for (int i = 0; i < NumberOfClasses; i++) {
+
+                dat[i][0] = limits[0][i] + "-" + limits[1][i];
+                dat[i][1] = "" + frequency[i];
+                dat[i][2] = lowerBoundary[i] + "-" + upperBoundary[i];
+                dat[i][3] = "" + midPoint[i];
+                dat[i][4] = "" + commulativeFrequency[i];
+                dat[i][5] = "" + tallyMarks[i];
+            }
+            // dat[x.length - 1][dat.length] = x[x.length - 1];
+
+            String column[] = {"Class Intevals", "Frequency", "Class Boundaries", "Class Mid Points", "Cummulative Frequency", "Tally Marks"};
+            jTable1.setModel(new javax.swing.table.DefaultTableModel(dat, column));
+        }
+
+    }
+
+    void makeTallyMarks() {
+
+        int y = 0;
+        //String x[];
+        //frequency = new Integer[tallyMarks.length];
+        //x = new String[tallyMarks.length + 1];
+        Integer total = 0;
+
+        for (int i = 0; i < tallyMarks.length; i++) {
+
+            tallyMarks[i] = "";
+            y = 0;
+
+            int o = 0;
+
+            for (int j = 0; j < frequency[i]; j++) {
+
+                if (tallyMarks[i].substring(y).length() == 4) {
+
+                    tallyMarks[i] += "/ ";
+                    y += 2 + 4;
+                } else {
+                    tallyMarks[i] += "|";
+                }
+
+                o++;
+
+            }
+
+            total += o;
+        }
+
+    }
+
 // ******************************** MY CODE *********************************
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jMeanButton1;
