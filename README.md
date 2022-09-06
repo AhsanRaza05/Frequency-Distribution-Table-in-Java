@@ -30,7 +30,13 @@
 It takes the GROUP DATA as input that is all LOWER and UPPER LIMITS and FREQUENCIES of the classes. Computes the MEAN, MEDIAN, MODE, STANDARD DEVIATION, MEAN DEVIATION and QUANTILES.
 
 ## <div id = "Installation"> How to Execute the Project </div>
-Download and Load Project in Eclipse IDE to Run it
+
+#### <div> Method # 1: Download 'Executable (exe)' file from 'Portable Application Folder' (Easy & Portable) </div>
+                No need to install anything but it is for WINDOWS OS  
+                
+#### <div> Method # 2: Download and Load Project in Eclipse IDE to Run it </div>
+                Eclipse IDE & JVM will be required.
+
 ## <div id = "Int"> Introduction </div>
 
 ### <div id = "FDT">Frequency Distribution Table </div>
