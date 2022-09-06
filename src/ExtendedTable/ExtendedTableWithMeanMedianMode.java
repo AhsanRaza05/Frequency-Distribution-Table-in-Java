@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
@@ -387,16 +388,17 @@ public class ExtendedTableWithMeanMedianMode extends javax.swing.JFrame {
         return (mean.divide(new BigDecimal(data.length), 4, RoundingMode.CEILING));
     }
 
-    boolean getInput(String allText){
-        
+    
+    public static boolean isValidInput(String allText){
+    
         String []x = allText.split("\n");
 
-        System.out.println(InputData.inputJTextArea.getText());
+        //System.out.println(InputData.inputJTextArea.getText());
         
         String y[][] = new String[3][];
         
         if(x.length != 3){
-         
+            JOptionPane.showMessageDialog(null, "Invalid Format!");    
             return false;
         }
         
@@ -413,12 +415,59 @@ public class ExtendedTableWithMeanMedianMode extends javax.swing.JFrame {
             } else if (x[i].contains(" ")) {
                 y[i] = x[i].split(" ");
             } else {
-                System.out.println("Please enter data in valid format.");
+                
+                JOptionPane.showMessageDialog(null, "Please enter data in valid format.");
+//                System.out.println("Please enter data in valid format.");
                 return false;
             }
         }
 
         if (y[0].length != y[1].length || y[0].length != y[2].length) {
+            
+            JOptionPane.showMessageDialog(null, "No. of Upper & Lower limts & Frequencies should be same.");
+            System.out.println("No. of Upper & Lower limts & Frequencies should be same.");
+            return false;
+        }
+        
+        return true;
+    }
+    
+    boolean getInput(String allText){
+        
+        String []x = allText.split("\n");
+
+        //System.out.println(InputData.inputJTextArea.getText());
+        
+        String y[][] = new String[3][];
+        
+        if(x.length != 3){
+            JOptionPane.showMessageDialog(this, "Invalid Format!");    
+            return false;
+        }
+        
+        for (int i = 0; i < x.length; i++) {
+            
+            // System.out.println(x);
+
+            if (x[i].contains(",")) {
+                if (x[i].contains(", ")) {
+                    y[i] = x[i].split(", ");
+                } else {
+                    y[i] = x[i].split(",");
+                }
+            } else if (x[i].contains(" ")) {
+                y[i] = x[i].split(" ");
+            } else {
+                
+                JOptionPane.showMessageDialog(this, "Please enter data in valid format.");
+//                System.out.println("Please enter data in valid format.");
+                return false;
+            }
+        }
+
+        if (y[0].length != y[1].length || y[0].length != y[2].length) {
+            
+            JOptionPane.showMessageDialog(this, "No. of Upper & Lower limts & Frequencies should be same.");
             System.out.println("No. of Upper & Lower limts & Frequencies should be same.");
             return false;
         }
@@ -571,7 +620,7 @@ public class ExtendedTableWithMeanMedianMode extends javax.swing.JFrame {
 
         System.out.println("Inside Extended Table");
         
-        new InputData();
+        //new InputData();
         
         if (getInput(x)) {
 

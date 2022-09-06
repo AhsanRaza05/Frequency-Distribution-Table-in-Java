@@ -123,11 +123,18 @@ public class InputData extends javax.swing.JFrame {
 //        
 //        System.out.println(inputJTextArea.getText().split("\n").length);
 //        
-        try {
-            new ExtendedTableWithMeanMedianMode(inputJTextArea.getText().trim()).setVisible(true);
-        } catch (Exception ex) {
-            Logger.getLogger(InputData.class.getName()).log(Level.SEVERE, null, ex);
+        System.out.println(inputJTextArea.getText());
+        
+        if(ExtendedTableWithMeanMedianMode.isValidInput(inputJTextArea.getText().trim())){
+        
+            try {
+                new ExtendedTableWithMeanMedianMode(inputJTextArea.getText().trim()).setVisible(true);
+            } catch (Exception ex) {
+                Logger.getLogger(InputData.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+        
+        
     }//GEN-LAST:event_subJBtnActionPerformed
 
     /**
@@ -166,7 +173,7 @@ public class InputData extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public static javax.swing.JTextArea inputJTextArea;
+    public javax.swing.JTextArea inputJTextArea;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
