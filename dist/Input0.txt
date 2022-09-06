@@ -1,9 +1,0 @@
-88 92 96 100 104
-91 95 99 103 107
-5 8 12 10 11
-
-
-Format
-All Lower Limits
-All Upper Limits
-All Frequency
